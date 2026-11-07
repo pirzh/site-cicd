@@ -4,11 +4,11 @@ on:
   push:
     branches: [ main ]
 
-permissions: 
+permissions:
   contents: read
   pages: write
   id-token: write
-  deployments: write  
+  deployments: write
 
 jobs:
   deploy:
@@ -19,6 +19,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Lint HTML and CSS
+        run: |
+          npx --yes htmlhint "**/*.html"
+          npx --yes stylelint "**/*.css" --allow-empty-input
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
